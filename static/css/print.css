@@ -1,0 +1,23 @@
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .navbar, .footer, .btn, .no-print, .toast-container {
+    display: none !important;
+  }
+
+  .ticket-container, .card {
+    box-shadow: none !important;
+    border: 1px solid #000000 !important;
+    page-break-inside: avoid;
+  }
+
+  .ticket-header {
+    background-color: #071A33 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

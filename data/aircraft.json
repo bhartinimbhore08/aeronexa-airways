@@ -1,0 +1,54 @@
+[
+  {
+    "code": "A350",
+    "name": "Airbus A350-900",
+    "manufacturer": "Airbus",
+    "capacity": 325,
+    "range_km": 15000,
+    "economy_seats": 240,
+    "premium_economy_seats": 35,
+    "business_seats": 40,
+    "first_seats": 10,
+    "amenities": ["High-Speed Wi-Fi", "4K In-flight Entertainment", "Individual Power & USB-C", "Adaptive LED Mood Lighting", "Quiet Cabin Technology"],
+    "image": "/static/images/aircraft_a350.jpg"
+  },
+  {
+    "code": "B787",
+    "name": "Boeing 787-9 Dreamliner",
+    "manufacturer": "Boeing",
+    "capacity": 296,
+    "range_km": 14140,
+    "economy_seats": 210,
+    "premium_economy_seats": 30,
+    "business_seats": 48,
+    "first_seats": 8,
+    "amenities": ["Dynamic Dimmable Windows", "Higher Humidity Control", "Satellite Wi-Fi", "HD Touchscreens", "Lie-Flat Business Seats"],
+    "image": "/static/images/aircraft_b787.jpg"
+  },
+  {
+    "code": "A321NEO",
+    "name": "Airbus A321neo LR",
+    "manufacturer": "Airbus",
+    "capacity": 190,
+    "range_km": 7400,
+    "economy_seats": 150,
+    "premium_economy_seats": 24,
+    "business_seats": 16,
+    "first_seats": 0,
+    "amenities": ["Airspace Cabin Design", "Extra Overhead Bins", "Fast Wi-Fi", "Bluetooth Audio Pairing", "Ergonomic Seats"],
+    "image": "/static/images/aircraft_a321.jpg"
+  },
+  {
+    "code": "A330",
+    "name": "Airbus A330-900neo",
+    "manufacturer": "Airbus",
+    "capacity": 287,
+    "range_km": 13300,
+    "economy_seats": 214,
+    "premium_economy_seats": 28,
+    "business_seats": 35,
+    "first_seats": 10,
+    "amenities": ["Super Silent Cabin", "Broadband Connectivity", "Wireless Phone Charging", "Chef-Curated Dining", "Ambient Lighting"],
+    "image": "/static/images/aircraft_a330.jpg"
+  }
+]

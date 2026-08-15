@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Help Center & FAQ | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2.5rem; max-width:850px;">
+  
+  <div style="text-align:center; margin-bottom:2.5rem;">
+    <span class="badge badge-gold" style="margin-bottom:0.5rem;">HELP CENTER</span>
+    <h1>Frequently Asked Questions</h1>
+    <p style="color:var(--gray-600);">Find quick answers regarding flight bookings, baggage policy, online check-in, and AeroRewards.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:2rem;">
+    <input type="text" class="form-control" id="faq-search" placeholder="Search FAQ topics (e.g. baggage, payment, check-in, refund)..." style="font-size:1.05rem; padding:0.85rem 1rem;">
+  </div>
+
+  <div id="faq-accordion-container">
+    
+    <div class="card faq-item" style="margin-bottom:1rem;">
+      <h3 style="color:var(--navy); font-size:1.1rem; cursor:pointer;" class="faq-question">
+        ❓ How do I complete my online check-in and get a boarding pass?
+      </h3>
+      <div class="faq-answer" style="margin-top:0.75rem; font-size:0.92rem; color:var(--gray-600);">
+        Online check-in opens 48 hours before scheduled departure. Simply visit the <a href="/checkin" style="color:var(--gold); font-weight:600;">Check-in Page</a>, enter your 6-character PNR (e.g. AX7K9P) and passenger last name, then click 'View & Print Boarding Pass'.
+      </div>
+    </div>
+
+    <div class="card faq-item" style="margin-bottom:1rem;">
+      <h3 style="color:var(--navy); font-size:1.1rem; cursor:pointer;" class="faq-question">
+        💳 Is real money charged during the payment step?
+      </h3>
+      <div class="faq-answer" style="margin-top:0.75rem; font-size:0.92rem; color:var(--gray-600);">
+        No! Aeronexa Airways is a software engineering portfolio application. All payments use sandbox demo simulation with dynamic QR code payloads. No real bank accounts or UPI credentials are ever accessed.
+      </div>
+    </div>
+
+    <div class="card faq-item" style="margin-bottom:1rem;">
+      <h3 style="color:var(--navy); font-size:1.1rem; cursor:pointer;" class="faq-question">
+        🧳 What is the checked baggage allowance for Economy & Business class?
+      </h3>
+      <div class="faq-answer" style="margin-top:0.75rem; font-size:0.92rem; color:var(--gray-600);">
+        Economy Saver includes 7kg cabin baggage. Economy Flex includes 23kg checked baggage. Business Premier includes 32kg checked baggage + priority handling. You can purchase additional weight (+15kg, +20kg, +30kg) during booking.
+      </div>
+    </div>
+
+    <div class="card faq-item" style="margin-bottom:1rem;">
+      <h3 style="color:var(--navy); font-size:1.1rem; cursor:pointer;" class="faq-question">
+        ✈ Can I change my seat or cancel my reservation?
+      </h3>
+      <div class="faq-answer" style="margin-top:0.75rem; font-size:0.92rem; color:var(--gray-600);">
+        Yes! Visit <a href="/manage-booking" style="color:var(--gold); font-weight:600;">Manage Booking</a> and enter your PNR to change seats or request flight cancellation.
+      </div>
+    </div>
+
+    <div class="card faq-item" style="margin-bottom:1rem;">
+      <h3 style="color:var(--navy); font-size:1.1rem; cursor:pointer;" class="faq-question">
+        ⭐ How do AeroRewards loyalty points work?
+      </h3>
+      <div class="faq-answer" style="margin-top:0.75rem; font-size:0.92rem; color:var(--gray-600);">
+        Registered users automatically earn 10 AeroRewards points for every ₹100 spent on confirmed flight bookings. Reach 3,000 points for Silver tier, 10,000 points for Gold tier, and 25,000 points for Platinum tier.
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('faq-search');
+  const items = document.querySelectorAll('.faq-item');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(q)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  }
+});
+</script>
+{% endblock %}

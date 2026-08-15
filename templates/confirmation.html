@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmation & E-Ticket | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2rem;">
+
+  <div id="confirmation-render">
+    <div style="text-align:center; padding:3rem;">
+      <p>Loading E-Ticket Details...</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const pnr = urlParams.get('pnr') || sessionStorage.getItem('aeronexa_pending_pnr');
+
+  if (!pnr) {
+    window.location.href = '/manage-booking';
+    return;
+  }
+
+  const container = document.getElementById('confirmation-render');
+
+  try {
+    const res = await fetch(`/api/bookings/${pnr}`);
+    const data = await res.json();
+
+    if (!res.ok) {
+      container.innerHTML = `<div class="card" style="color:var(--danger); text-align:center;">${data.error || 'Booking not found.'}</div>`;
+      return;
+    }
+
+    const { booking, passengers, payment } = data;
+
+    container.innerHTML = `
+      <div style="max-width:850px; margin:0 auto;">
+        
+        <!-- Status Banner -->
+        <div style="text-align:center; margin-bottom:2rem;">
+          <div style="width:60px; height:60px; border-radius:50%; background-color:rgba(25,135,84,0.12); color:var(--success); font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem auto; font-weight:800;">✓</div>
+          <h1 style="color:var(--navy); font-size:2.2rem;">Booking Confirmed!</h1>
+          <p style="color:var(--gray-600);">Your Aeronexa flight reservation is complete. E-Ticket issued below.</p>
+        </div>
+
+        <!-- Ticket Card -->
+        <div class="ticket-container">
+          <div class="ticket-header">
+            <div>
+              <div style="font-size:0.8rem; color:var(--gold); text-transform:uppercase; font-weight:700;">Aeronexa Electronic Ticket</div>
+              <div style="font-size:1.5rem; font-weight:800;">PNR: ${booking.pnr}</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="badge badge-success" style="font-size:0.85rem;">STATUS: ${booking.booking_status}</span>
+            </div>
+          </div>
+
+          <div class="ticket-body">
+            <!-- Route -->
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--gray-200); padding-bottom:1.5rem; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <div style="font-size:1.8rem; font-weight:800; color:var(--navy);">${booking.departure_time}</div>
+                <div style="font-weight:700; color:var(--navy);">${booking.origin_city} (${booking.origin})</div>
+                <div style="font-size:0.8rem; color:var(--gray-600);">${booking.origin_airport_name}</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-weight:700; color:var(--gold);">${booking.flight_number}</div>
+                <div style="font-size:0.85rem; color:var(--gray-600);">${booking.duration} • Direct</div>
+                <div style="font-size:0.85rem; color:var(--navy); font-weight:600;">${booking.aircraft_name}</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--navy);">${booking.arrival_time}</div>
+                <div style="font-weight:700; color:var(--navy);">${booking.dest_city} (${booking.destination})</div>
+                <div style="font-size:0.8rem; color:var(--gray-600);">${booking.dest_airport_name}</div>
+              </div>
+            </div>
+
+            <!-- Passengers List -->
+            <h4 style="color:var(--navy); margin-bottom:1rem;">Traveler Details</h4>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+              ${passengers.map(p => `
+                <div style="background-color:var(--light); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--gray-200);">
+                  <div style="font-weight:700; color:var(--navy);">${p.title} ${p.first_name} ${p.last_name}</div>
+                  <div style="font-size:0.85rem; color:var(--gray-600); margin-top:0.25rem;">
+                    <span>Seat: <strong>${p.seat_number || '14A'}</strong></span> | 
+                    <span>Class: <strong style="text-transform:capitalize;">${booking.cabin_class}</strong></span>
+                  </div>
+                  <div style="font-size:0.8rem; color:var(--gray-400); margin-top:0.25rem;">Passport: ${p.passport_number || 'NA (Domestic)'}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Payment Summary -->
+            <div style="display:flex; justify-content:space-between; align-items:center; background-color:var(--light); padding:1rem 1.5rem; border-radius:var(--radius-md);">
+              <div>
+                <div style="font-size:0.8rem; color:var(--gray-600);">Total Paid (Demo Payment)</div>
+                <div style="font-size:1.4rem; font-weight:800; color:var(--navy);">${window.Aeronexa.formatCurrency(booking.total_amount)}</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:0.8rem; color:var(--gray-600);">Transaction Ref</div>
+                <div style="font-weight:700; color:var(--navy);">${payment ? payment.transaction_id : 'AXPAY-8F29K1'}</div>
+              </div>
+            </div>
+
+            <div class="barcode-visual"></div>
+            <div style="text-align:center; font-size:0.75rem; color:var(--gray-400); margin-top:0.4rem;">
+              *${booking.pnr}* - BOARDING PASS ISSUABLE UPON ONLINE CHECK-IN
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons Bar -->
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;" class="no-print">
+          <button onclick="window.print()" class="btn btn-navy">
+            🖨 Print Ticket
+          </button>
+          <a href="/checkin?pnr=${booking.pnr}" class="btn btn-gold">
+            Online Check-in Now →
+          </a>
+          <a href="/dashboard" class="btn btn-outline-navy">
+            Go to My Dashboard
+          </a>
+        </div>
+
+      </div>
+    `;
+
+  } catch (err) {
+    container.innerHTML = `<div class="card" style="color:var(--danger); text-align:center;">Network error loading ticket.</div>`;
+  }
+});
+</script>
+{% endblock %}

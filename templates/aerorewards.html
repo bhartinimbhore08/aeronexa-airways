@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}AeroRewards Loyalty Club | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2.5rem;">
+
+  <div id="aerorewards-content"></div>
+
+  <h2 style="text-align:center; margin-bottom:2rem; color:var(--navy);">Loyalty Tier Privileges</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem;">
+    
+    <div class="card" style="border-top:4px solid #3B82F6;">
+      <h3 style="color:var(--navy); margin-bottom:0.5rem;">Blue Tier</h3>
+      <div style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Entry Level (0 - 2,999 Pts)</div>
+      <ul style="font-size:0.85rem; line-height:1.8; color:var(--gray-600);">
+        <li>✓ Earn 10 points per ₹100</li>
+        <li>✓ Digital membership card</li>
+        <li>✓ Member-only promotional alerts</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-top:4px solid #94A3B8;">
+      <h3 style="color:var(--navy); margin-bottom:0.5rem;">Silver Tier</h3>
+      <div style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Frequent Traveler (3,000 Pts)</div>
+      <ul style="font-size:0.85rem; line-height:1.8; color:var(--gray-600);">
+        <li>✓ 25% Bonus loyalty points</li>
+        <li>✓ Priority check-in counter</li>
+        <li>✓ Extra +5kg baggage allowance</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-top:4px solid var(--gold);">
+      <h3 style="color:var(--navy); margin-bottom:0.5rem;">Gold Member</h3>
+      <div style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Executive Level (10,000 Pts)</div>
+      <ul style="font-size:0.85rem; line-height:1.8; color:var(--gray-600);">
+        <li>✓ 50% Bonus loyalty points</li>
+        <li>✓ VIP Airport lounge access</li>
+        <li>✓ Free standard seat selection</li>
+        <li>✓ Priority baggage handling</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-top:4px solid #1E293B;">
+      <h3 style="color:var(--navy); margin-bottom:0.5rem;">Platinum Elite</h3>
+      <div style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Ultimate Privilege (25,000 Pts)</div>
+      <ul style="font-size:0.85rem; line-height:1.8; color:var(--gray-600);">
+        <li>✓ 100% Bonus loyalty points</li>
+        <li>✓ Complimentary cabin upgrades</li>
+        <li>✓ Guaranteed seat availability</li>
+        <li>✓ Dedicated 24/7 VIP Concierge</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

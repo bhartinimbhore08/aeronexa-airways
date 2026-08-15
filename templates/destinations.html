@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Destinations | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2.5rem;">
+  <div style="text-align:center; max-width:700px; margin:0 auto 3rem auto;">
+    <span class="badge badge-gold" style="margin-bottom:0.5rem;">AERONEXA GLOBAL NETWORK</span>
+    <h1>Worldwide Destinations</h1>
+    <p>Fly with Aeronexa Airways to iconic international capitals, tropical islands, and cultural hubs across Asia, Europe, Middle East, and North America.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.75rem;">
+    
+    <!-- BOM -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">India</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">Mumbai (BOM)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">City of Dreams & Gateway to India.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹4,500</strong></div>
+          <a href="/flights?dest=BOM" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEL -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">India</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">Delhi (DEL)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Historic majesty & modern culinary trails.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹4,200</strong></div>
+          <a href="/flights?dest=DEL" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DXB -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">UAE</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">Dubai (DXB)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Futuristic skylines & desert luxury.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹18,500</strong></div>
+          <a href="/flights?dest=DXB" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LHR -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">UK</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">London (LHR)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Royal elegance & West End culture.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹58,500</strong></div>
+          <a href="/flights?dest=LHR" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CDG -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">France</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">Paris (CDG)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Capital of romance, fashion & gastronomy.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹61,200</strong></div>
+          <a href="/flights?dest=CDG" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HND -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">Japan</span>
+        <h3 style="margin:0.4rem 0 0.2rem 0;">Tokyo (HND)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Neon horizons encounter ancient temples.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹54,000</strong></div>
+          <a href="/flights?dest=HND" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

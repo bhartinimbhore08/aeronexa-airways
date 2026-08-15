@@ -1,0 +1,26 @@
+[
+  {
+    "code": "AERO10",
+    "discount_percent": 10,
+    "max_discount": 3000,
+    "min_spend": 5000,
+    "description": "Enjoy 10% instant savings across all domestic and international flights.",
+    "badge": "Popular"
+  },
+  {
+    "code": "WELCOME20",
+    "discount_percent": 20,
+    "max_discount": 5000,
+    "min_spend": 10000,
+    "description": "Special 20% discount for first-time Aeronexa Airways travelers.",
+    "badge": "First Flight"
+  },
+  {
+    "code": "BUSINESS15",
+    "discount_percent": 15,
+    "max_discount": 10000,
+    "min_spend": 25000,
+    "description": "Exclusive 15% discount on Business and First Class bookings.",
+    "badge": "Premium Class"
+  }
+]

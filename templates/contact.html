@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Support & Contact | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2.5rem; max-width:700px;">
+  
+  <div class="card" style="border:1px solid var(--gold);">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <span class="badge badge-gold" style="margin-bottom:0.4rem;">CUSTOMER SUPPORT</span>
+      <h2>Contact Aeronexa Concierge</h2>
+      <p style="font-size:0.9rem; color:var(--gray-600);">Have a question regarding reservations, baggage, or AeroRewards? Send us a message.</p>
+    </div>
+
+    <form id="contact-form">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" class="form-control" name="name" required placeholder="e.g. Bharti Nimbhore">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" class="form-control" name="email" required placeholder="name@domain.com">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" name="phone" placeholder="+91 9876543210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Inquiry Subject *</label>
+          <input type="text" class="form-control" name="subject" required placeholder="e.g. Baggage Inquiry, Refund Request">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Message *</label>
+        <textarea class="form-control" name="message" rows="5" required placeholder="Type your inquiry message here..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-lg" style="width:100%;">
+        Submit Inquiry Message →
+      </button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        subject: form.subject.value.trim(),
+        message: form.message.value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          window.Aeronexa.showToast(data.message, 'success');
+          form.reset();
+        } else {
+          window.Aeronexa.showToast(data.error || 'Failed to submit inquiry.', 'error');
+        }
+      } catch(err) {
+        window.Aeronexa.showToast('Network error submitting contact form.', 'error');
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

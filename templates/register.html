@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Account Registration | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:3rem; max-width:500px;">
+  
+  <div class="card" style="border:1px solid var(--gold);">
+    <div style="text-align:center; margin-bottom:1.75rem;">
+      <span class="badge badge-gold" style="margin-bottom:0.4rem;">CREATE ACCOUNT</span>
+      <h2>Join Aeronexa Club</h2>
+      <p style="font-size:0.9rem; color:var(--gray-600);">Earn 500 bonus AeroRewards points upon registration.</p>
+    </div>
+
+    <form id="register-form">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input type="text" class="form-control" name="name" required placeholder="e.g. Bharti Nimbhore">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address *</label>
+        <input type="email" class="form-control" name="email" required placeholder="name@domain.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mobile Number (+91 format)</label>
+        <input type="tel" class="form-control" name="mobile" placeholder="+919876543210">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password *</label>
+        <input type="password" class="form-control" name="password" required placeholder="At least 6 characters">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password *</label>
+        <input type="password" class="form-control" name="confirm_password" required placeholder="Re-enter password">
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-lg" style="width:100%; margin-top:1rem;">
+        Complete Registration →
+      </button>
+    </form>
+
+    <div style="margin-top:1.5rem; text-align:center; font-size:0.88rem; color:var(--gray-600); border-top:1px solid var(--gray-100); padding-top:1rem;">
+      Already have an account? <a href="/login" style="color:var(--navy); font-weight:700;">Sign In</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

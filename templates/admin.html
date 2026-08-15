@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Administrator Dashboard | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2.5rem;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem;">
+    <div>
+      <span class="badge badge-gold" style="margin-bottom:0.4rem;">ADMIN CONTROL PANEL</span>
+      <h1>System Analytics & Control</h1>
+    </div>
+    <button onclick="window.Aeronexa.openModal('add-flight-modal')" class="btn btn-gold">+ Add New Flight</button>
+  </div>
+
+  <!-- Analytical Summary Cards Grid -->
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:2.5rem;" id="admin-stats-grid">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem; font-weight:800; color:var(--navy);" id="stat-users">-</div>
+      <div style="font-size:0.85rem; color:var(--gray-600); font-weight:600;">Registered Users</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem; font-weight:800; color:var(--navy);" id="stat-bookings">-</div>
+      <div style="font-size:0.85rem; color:var(--gray-600); font-weight:600;">Total Bookings</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem; font-weight:800; color:var(--success);" id="stat-confirmed">-</div>
+      <div style="font-size:0.85rem; color:var(--gray-600); font-weight:600;">Confirmed Trips</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem; font-weight:800; color:var(--gold);" id="stat-revenue">-</div>
+      <div style="font-size:0.85rem; color:var(--gray-600); font-weight:600;">Demo Revenue</div>
+    </div>
+  </div>
+
+  <!-- Flight Management Table -->
+  <div class="card" style="margin-bottom:2.5rem;">
+    <h3 style="margin-bottom:1.25rem; color:var(--navy);">Flight Schedules Management</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem;">
+        <thead>
+          <tr style="background-color:var(--light); border-bottom:2px solid var(--gray-200);">
+            <th style="padding:0.75rem;">Flight No</th>
+            <th style="padding:0.75rem;">Route</th>
+            <th style="padding:0.75rem;">Time</th>
+            <th style="padding:0.75rem;">Aircraft</th>
+            <th style="padding:0.75rem;">Economy Fare</th>
+            <th style="padding:0.75rem;">Status</th>
+            <th style="padding:0.75rem;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-flights-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bookings Inspection Table -->
+  <div class="card" style="margin-bottom:2.5rem;">
+    <h3 style="margin-bottom:1.25rem; color:var(--navy);">System Reservations</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem;">
+        <thead>
+          <tr style="background-color:var(--light); border-bottom:2px solid var(--gray-200);">
+            <th style="padding:0.75rem;">PNR</th>
+            <th style="padding:0.75rem;">Passenger/User</th>
+            <th style="padding:0.75rem;">Flight</th>
+            <th style="padding:0.75rem;">Cabin</th>
+            <th style="padding:0.75rem;">Amount</th>
+            <th style="padding:0.75rem;">Status</th>
+          </tr>
+        </thead>
+        <tbody id="admin-bookings-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal: Add New Flight -->
+<div class="modal-overlay" id="add-flight-modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="window.Aeronexa.closeModal('add-flight-modal')">×</button>
+    <h3 style="color:var(--navy); margin-bottom:1.25rem;">Create New Aeronexa Flight</h3>
+    <form id="add-flight-form">
+      <div class="form-group">
+        <label class="form-label">Flight Number *</label>
+        <input type="text" class="form-control" name="flight_number" placeholder="e.g. AX999" required>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Origin Code *</label>
+          <input type="text" class="form-control" name="origin" value="BOM" required style="text-transform:uppercase;">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Destination Code *</label>
+          <input type="text" class="form-control" name="destination" value="SIN" required style="text-transform:uppercase;">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Departure Time *</label>
+          <input type="text" class="form-control" name="departure_time" value="10:00" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Arrival Time *</label>
+          <input type="text" class="form-control" name="arrival_time" value="16:30" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Aircraft *</label>
+        <select class="form-select" name="aircraft">
+          <option value="A350">Airbus A350-900</option>
+          <option value="B787">Boeing 787-9 Dreamliner</option>
+          <option value="A321NEO">Airbus A321neo LR</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Economy Fare (INR) *</label>
+        <input type="number" class="form-control" name="economy_price" value="25000" required>
+      </div>
+      <button type="submit" class="btn btn-gold" style="width:100%; margin-top:1rem;">Create Flight Record</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  loadAdminStats();
+  loadAdminFlights();
+  loadAdminBookings();
+
+  const addForm = document.getElementById('add-flight-form');
+  if (addForm) {
+    addForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        flight_number: addForm.flight_number.value.trim().toUpperCase(),
+        origin: addForm.origin.value.trim().toUpperCase(),
+        destination: addForm.destination.value.trim().toUpperCase(),
+        departure_time: addForm.departure_time.value.trim(),
+        arrival_time: addForm.arrival_time.value.trim(),
+        aircraft: addForm.aircraft.value,
+        economy_price: parseFloat(addForm.economy_price.value)
+      };
+
+      try {
+        const res = await fetch('/api/admin/flights', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          window.Aeronexa.showToast('New flight created successfully!', 'success');
+          window.Aeronexa.closeModal('add-flight-modal');
+          loadAdminFlights();
+        } else {
+          window.Aeronexa.showToast(data.error || 'Creation failed.', 'error');
+        }
+      } catch(err) {
+        window.Aeronexa.showToast('Network error creating flight.', 'error');
+      }
+    });
+  }
+});
+
+async function loadAdminStats() {
+  try {
+    const res = await fetch('/api/admin/stats');
+    const data = await res.json();
+    if (res.ok) {
+      document.getElementById('stat-users').textContent = data.total_users;
+      document.getElementById('stat-bookings').textContent = data.total_bookings;
+      document.getElementById('stat-confirmed').textContent = data.confirmed_bookings;
+      document.getElementById('stat-revenue').textContent = window.Aeronexa.formatCurrency(data.demo_revenue);
+    }
+  } catch(e){}
+}
+
+async function loadAdminFlights() {
+  const tbody = document.getElementById('admin-flights-tbody');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch('/api/admin/flights');
+    const data = await res.json();
+    if (res.ok) {
+      tbody.innerHTML = data.flights.map(fl => `
+        <tr style="border-bottom:1px solid var(--gray-100);">
+          <td style="padding:0.75rem;"><strong>${fl.flight_number}</strong></td>
+          <td style="padding:0.75rem;">${fl.origin} → ${fl.destination}</td>
+          <td style="padding:0.75rem;">${fl.departure_time} - ${fl.arrival_time}</td>
+          <td style="padding:0.75rem;">${fl.aircraft}</td>
+          <td style="padding:0.75rem;">₹${fl.economy_price.toLocaleString()}</td>
+          <td style="padding:0.75rem;"><span class="badge badge-success">${fl.status}</span></td>
+          <td style="padding:0.75rem;">
+            <button onclick="deleteFlight(${fl.id})" class="btn btn-outline-navy btn-sm" style="color:var(--danger); border-color:var(--danger);">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+  } catch(e){}
+}
+
+async function loadAdminBookings() {
+  const tbody = document.getElementById('admin-bookings-tbody');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch('/api/admin/bookings');
+    const data = await res.json();
+    if (res.ok) {
+      tbody.innerHTML = data.bookings.map(b => `
+        <tr style="border-bottom:1px solid var(--gray-100);">
+          <td style="padding:0.75rem;"><strong>${b.pnr}</strong></td>
+          <td style="padding:0.75rem;">${b.user_name || 'Guest'} (${b.user_email || 'Direct'})</td>
+          <td style="padding:0.75rem;">${b.flight_number} (${b.origin} → ${b.destination})</td>
+          <td style="padding:0.75rem; text-transform:capitalize;">${b.cabin_class}</td>
+          <td style="padding:0.75rem; font-weight:700;">₹${b.total_amount.toLocaleString()}</td>
+          <td style="padding:0.75rem;"><span class="badge ${b.booking_status === 'CONFIRMED' ? 'badge-success' : 'badge-warning'}">${b.booking_status}</span></td>
+        </tr>
+      `).join('');
+    }
+  } catch(e){}
+}
+
+window.deleteFlight = function(id) {
+  if (confirm("Delete this flight schedule record?")) {
+    fetch(`/api/admin/flights/${id}`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(data => {
+        window.Aeronexa.showToast(data.message, 'info');
+        loadAdminFlights();
+      });
+  }
+};
+</script>
+{% endblock %}

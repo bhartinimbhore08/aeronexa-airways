@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Demo Payment Gateway | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:3rem;">
+  <div id="payment-container">
+    <div style="text-align:center; padding:3rem;">
+      <div style="font-size:2rem; color:var(--gold);">💳</div>
+      <h3>Initializing Sandbox Demo Payment Gateway...</h3>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+{% endblock %}

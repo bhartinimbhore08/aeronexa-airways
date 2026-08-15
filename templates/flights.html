@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Search Results | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2rem;">
+
+  <!-- Search Header Recap -->
+  <div class="card" style="margin-bottom:2rem; background-color:var(--navy); color:var(--white);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <span class="badge badge-gold" id="results-count">Searching Flights...</span>
+        <h2 style="color:var(--white); margin-top:0.4rem;" id="search-route-title">Available Flights</h2>
+      </div>
+      <div>
+        <a href="/" class="btn btn-gold btn-sm">Modify Search</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 280px 1fr; gap:2rem;">
+    <!-- Sidebar Filters -->
+    <aside>
+      <div class="card">
+        <h3 style="margin-bottom:1.25rem; color:var(--navy); font-size:1.2rem;">Filter Flights</h3>
+
+        <!-- Sort Control -->
+        <div class="form-group">
+          <label class="form-label">Sort By</label>
+          <select class="form-select" id="sort-flights">
+            <option value="cheapest">Price: Lowest First</option>
+            <option value="fastest">Duration: Fastest</option>
+            <option value="earliest">Departure: Earliest</option>
+            <option value="latest">Departure: Latest</option>
+          </select>
+        </div>
+
+        <hr style="margin:1.25rem 0; border:0; border-top:1px solid var(--gray-200);">
+
+        <!-- Price Range Slider -->
+        <div class="form-group">
+          <label class="form-label" style="display:flex; justify-content:space-between;">
+            <span>Max Price</span>
+            <span id="price-filter-val" style="color:var(--gold); font-weight:700;">₹150,000</span>
+          </label>
+          <input type="range" id="price-filter" min="4000" max="150000" step="1000" value="150000" style="width:100%;">
+        </div>
+
+        <hr style="margin:1.25rem 0; border:0; border-top:1px solid var(--gray-200);">
+
+        <!-- Stops Filter -->
+        <div class="form-group">
+          <label class="form-label">Stops</label>
+          <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.9rem; color:var(--gray-600);">
+            <label><input type="checkbox" checked> Direct (Non-stop)</label>
+            <label><input type="checkbox" checked> 1 Stop</label>
+          </div>
+        </div>
+
+        <hr style="margin:1.25rem 0; border:0; border-top:1px solid var(--gray-200);">
+
+        <!-- Departure Time Slots -->
+        <div class="form-group">
+          <label class="form-label">Departure Time</label>
+          <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.9rem; color:var(--gray-600);">
+            <label><input type="checkbox" checked> Morning (06:00 - 12:00)</label>
+            <label><input type="checkbox" checked> Afternoon (12:00 - 18:00)</label>
+            <label><input type="checkbox" checked> Night (18:00 - 06:00)</label>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Flight Cards List -->
+    <section>
+      <div id="flight-results-container">
+        <!-- Dynamically rendered by static/js/flights.js -->
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/flights.js') }}"></script>
+{% endblock %}

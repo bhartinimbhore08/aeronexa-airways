@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}User Login | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:3rem; max-width:450px;">
+  
+  <div class="card" style="border:1px solid var(--gold);">
+    <div style="text-align:center; margin-bottom:1.75rem;">
+      <span class="badge badge-gold" style="margin-bottom:0.4rem;">MY AERONEXA ACCOUNT</span>
+      <h2>Welcome Back</h2>
+      <p style="font-size:0.9rem; color:var(--gray-600);">Sign in to access your trips and AeroRewards points.</p>
+    </div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label">Email Address *</label>
+        <input type="email" class="form-control" name="email" value="demo@aeronexa.com" required placeholder="name@domain.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password *</label>
+        <input type="password" class="form-control" name="password" value="Demo@123" required placeholder="Enter password">
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-lg" style="width:100%; margin-top:1rem;">
+        Sign In to Account →
+      </button>
+    </form>
+
+    <div style="margin-top:1.5rem; text-align:center; font-size:0.88rem; color:var(--gray-600); border-top:1px solid var(--gray-100); padding-top:1rem;">
+      Demo User: <strong>demo@aeronexa.com</strong> / <strong>Demo@123</strong><br>
+      Admin User: <strong>admin@aeronexa.com</strong> / <strong>Admin@123</strong>
+      <div style="margin-top:0.75rem;">
+        Don't have an account? <a href="/register" style="color:var(--navy); font-weight:700;">Register Now</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

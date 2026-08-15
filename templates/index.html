@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Aeronexa Airways | Connected Above the Clouds{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tagline">Connected Above the Clouds</div>
+    <h1 class="hero-headline">Elevate Your Journey Across Global Skies</h1>
+    <p class="hero-subtext">Discover seamless international travel, Airbus A350 luxury, chef-curated dining, and high-speed satellite Wi-Fi.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="#flight-search" class="btn btn-gold btn-lg">Book a Flight</a>
+      <a href="/destinations" class="btn btn-outline btn-lg">Explore Destinations</a>
+    </div>
+  </div>
+</section>
+
+<!-- Flight Search Widget Section -->
+<div class="container" id="flight-search">
+  <div class="search-widget">
+    <div class="trip-tabs">
+      <button class="trip-tab active" data-trip="round_trip">Round Trip</button>
+      <button class="trip-tab" data-trip="one_way">One Way</button>
+      <button class="trip-tab" data-trip="multi_city">Multi-City</button>
+    </div>
+
+    <form id="search-flights-form">
+      <div class="search-grid">
+        <div class="form-group">
+          <label class="form-label">From (Origin) *</label>
+          <select class="form-select" name="origin" required>
+            <option value="BOM">BOM - Mumbai, India</option>
+            <option value="DEL">DEL - Delhi, India</option>
+            <option value="BLR">BLR - Bengaluru, India</option>
+            <option value="HYD">HYD - Hyderabad, India</option>
+            <option value="DXB">DXB - Dubai, UAE</option>
+            <option value="SIN">SIN - Singapore</option>
+            <option value="LHR">LHR - London, UK</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">To (Destination) *</label>
+          <select class="form-select" name="destination" required>
+            <option value="LHR" selected>LHR - London Heathrow, UK</option>
+            <option value="BOM">BOM - Mumbai, India</option>
+            <option value="DEL">DEL - Delhi, India</option>
+            <option value="DXB">DXB - Dubai, UAE</option>
+            <option value="SIN">SIN - Singapore</option>
+            <option value="CDG">CDG - Paris, France</option>
+            <option value="HND">HND - Tokyo Haneda, Japan</option>
+            <option value="JFK">JFK - New York JFK, USA</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Departure Date *</label>
+          <input type="date" class="form-control" name="departure_date" value="2026-09-12" required>
+        </div>
+
+        <div class="form-group" id="return-date-group">
+          <label class="form-label">Return Date</label>
+          <input type="date" class="form-control" name="return_date" value="2026-09-20">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Passengers</label>
+          <select class="form-select" name="passengers">
+            <option value="1">1 Adult</option>
+            <option value="2">2 Adults</option>
+            <option value="3">3 Passengers</option>
+            <option value="4">4 Passengers</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Cabin Class</label>
+          <select class="form-select" name="cabin">
+            <option value="economy">Economy Class</option>
+            <option value="premium_economy">Premium Economy</option>
+            <option value="business">Business Class</option>
+            <option value="first">First Class</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div style="display:flex; gap:1.5rem; font-size:0.88rem; color:var(--gray-600);">
+          <label style="cursor:pointer;"><input type="checkbox" checked> Direct Flights Only</label>
+          <label style="cursor:pointer;"><input type="checkbox"> Flexible Dates (±3 Days)</label>
+        </div>
+        <button type="submit" class="btn btn-gold btn-lg">Search Flights →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Featured Destinations Showcase -->
+<section class="container" style="margin-top:3rem;">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+    <div>
+      <span class="badge badge-gold" style="margin-bottom:0.5rem;">GLOBAL DESTINATIONS</span>
+      <h2>Fly to Iconic Worldwide Hubs</h2>
+    </div>
+    <a href="/destinations" class="btn btn-outline-navy">View All Destinations →</a>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+    <!-- Destination 1 -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">United Kingdom</span>
+        <h3 style="margin:0.5rem 0 0.25rem 0;">London (LHR)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Experience West End culture, Big Ben, and royal heritage.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹58,500</strong></div>
+          <a href="/flights?dest=LHR" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destination 2 -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">UAE</span>
+        <h3 style="margin:0.5rem 0 0.25rem 0;">Dubai (DXB)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Futuristic skylines, desert dunes, and luxury resorts.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹18,500</strong></div>
+          <a href="/flights?dest=DXB" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destination 3 -->
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div style="height:200px; background:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+      <div style="padding:1.5rem;">
+        <span class="badge badge-gold">Singapore</span>
+        <h3 style="margin:0.5rem 0 0.25rem 0;">Singapore (SIN)</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Garden City marvels, street food, and Changi Jewel.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:0.75rem; color:var(--gray-400);">From</span> <strong style="font-size:1.2rem; color:var(--navy);">₹22,000</strong></div>
+          <a href="/flights?dest=SIN" class="btn btn-gold btn-sm">Book Flight</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Promotions Section -->
+<section class="container" style="margin-top:3rem;">
+  <div class="card" style="background:linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color:var(--white); padding:3rem 2rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; align-items:center;">
+      <div>
+        <span class="badge badge-gold" style="margin-bottom:1rem;">EXCLUSIVE OFFER</span>
+        <h2 style="color:var(--white); margin-bottom:1rem;">Save 10% With Code <span style="color:var(--gold);">AERO10</span></h2>
+        <p style="color:rgba(255,255,255,0.8); margin-bottom:1.5rem;">Enjoy instant promo savings across all international flights when booking directly on Aeronexa Airways.</p>
+        <a href="#flight-search" class="btn btn-gold">Use Promo Code Now</a>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="background:rgba(255,255,255,0.1); padding:1rem 1.25rem; border-radius:var(--radius-md); border-left:4px solid var(--gold);">
+          <div style="font-weight:700; color:var(--gold);">WELCOME20</div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.8);">20% off for first-time Aeronexa travelers</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1); padding:1rem 1.25rem; border-radius:var(--radius-md); border-left:4px solid var(--gold);">
+          <div style="font-weight:700; color:var(--gold);">BUSINESS15</div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.8);">15% discount on Business and First Class seats</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI Travel Assistant Section -->
+<section class="container" style="margin-top:3rem;">
+  <div class="card" style="border:2px solid var(--gold);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+      <div>
+        <span class="badge badge-gold" style="margin-bottom:0.4rem;">AI TRAVEL ADVISOR</span>
+        <h3>Aeronexa AI Destination Assistant</h3>
+        <p>Get personalized flight and destination recommendations based on your budget and trip style.</p>
+      </div>
+    </div>
+
+    <form id="ai-assistant-form" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; align-items:end;">
+      <div class="form-group">
+        <label class="form-label">Max Budget (INR)</label>
+        <input type="number" class="form-control" id="ai-budget" value="60000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Travel Style</label>
+        <select class="form-select" id="ai-style">
+          <option value="culture">Cultural & Historic</option>
+          <option value="beach">Coastal & Beach</option>
+          <option value="luxury">Luxury & Shopping</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-navy" style="margin-bottom:1.25rem;">Ask AI Assistant ✨</button>
+    </form>
+
+    <div id="ai-response-container" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--gray-200);"></div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/flights.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const aiForm = document.getElementById('ai-assistant-form');
+  if (aiForm) {
+    aiForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const budget = document.getElementById('ai-budget').value;
+      const travel_type = document.getElementById('ai-style').value;
+      const respBox = document.getElementById('ai-response-container');
+
+      respBox.style.display = 'block';
+      respBox.innerHTML = '<p style="color:var(--gold); font-weight:600;">✨ Consulting Aeronexa Recommendation Engine...</p>';
+
+      try {
+        const res = await fetch('/api/ai-assistant', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ budget, travel_type })
+        });
+        const data = await res.json();
+        
+        let recsHtml = data.recommendations.map(r => `
+          <div style="background:var(--light); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--gray-200);">
+            <h4 style="color:var(--navy);">${r.city} (${r.code}), ${r.country}</h4>
+            <p style="font-size:0.85rem; margin:0.4rem 0;">${r.description}</p>
+            <div style="font-weight:700; color:var(--navy);">Starting ₹${r.starting_fare.toLocaleString()}</div>
+          </div>
+        `).join('');
+
+        respBox.innerHTML = `
+          <p style="font-weight:600; color:var(--navy); margin-bottom:1rem;">${data.advice}</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">${recsHtml}</div>
+        `;
+      } catch(err) {
+        respBox.innerHTML = '<p style="color:var(--danger);">Failed to retrieve recommendations.</p>';
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

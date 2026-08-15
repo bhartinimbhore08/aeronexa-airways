@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Aeronexa Airways | Connected Above the Clouds{% endblock %}</title>
+  <meta name="description" content="Aeronexa Airways - Premium International Full-Stack Airline Platform. Search flights, manage bookings, check in online, and earn AeroRewards.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}" media="print">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Sticky Global Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M21,16 L21,14 L13,9 L13,3.5 C13,2.67 12.33,2 11.5,2 C10.67,2 10,2.67 10,3.5 L10,9 L2,14 L2,16 L10,13.5 L10,19 L8,20.5 L8,22 L11.5,21 L15,22 L15,20.5 L13,19 L13,13.5 L21,16 Z"/>
+        </svg>
+        <div class="brand-name">AERONEXA <span>AIRWAYS</span></div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/flights" class="nav-link {% if request.path == '/flights' %}active{% endif %}">Book</a>
+        <a href="/destinations" class="nav-link {% if request.path == '/destinations' %}active{% endif %}">Destinations</a>
+        <a href="/flight-status" class="nav-link {% if request.path == '/flight-status' %}active{% endif %}">Flight Status</a>
+        <a href="/manage-booking" class="nav-link {% if request.path == '/manage-booking' %}active{% endif %}">Manage Booking</a>
+        <a href="/checkin" class="nav-link {% if request.path == '/checkin' %}active{% endif %}">Check-in</a>
+        <a href="/aerorewards" class="nav-link {% if request.path == '/aerorewards' %}active{% endif %}">AeroRewards</a>
+        <a href="/fleet" class="nav-link {% if request.path == '/fleet' %}active{% endif %}">Fleet</a>
+        <a href="/about" class="nav-link {% if request.path == '/about' %}active{% endif %}">About Us</a>
+        <a href="/help" class="nav-link {% if request.path == '/help' %}active{% endif %}">Help</a>
+      </nav>
+
+      <div class="nav-auth">
+        {% if current_user %}
+          <div class="user-badge">
+            <span>👤</span>
+            <a href="/dashboard" style="font-weight:600;">${{ current_user.name }}</a>
+          </div>
+          {% if current_user.role == 'admin' %}
+            <a href="/admin" class="btn btn-gold btn-sm">Admin Panel</a>
+          {% endif %}
+          <button id="logout-btn" class="btn btn-outline-navy btn-sm" style="color:var(--white); border-color:rgba(255,255,255,0.4);">Logout</button>
+        {% else %}
+          <a href="/login" class="btn btn-outline-navy btn-sm" style="color:var(--white); border-color:var(--gold);">Login</a>
+          <a href="/register" class="btn btn-gold btn-sm">Register</a>
+        {% endif %}
+
+        <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-logo" style="margin-bottom:1rem;">
+          <svg viewBox="0 0 24 24" style="width:28px; height:28px; fill:var(--gold);">
+            <path d="M21,16 L21,14 L13,9 L13,3.5 C13,2.67 12.33,2 11.5,2 C10.67,2 10,2.67 10,3.5 L10,9 L2,14 L2,16 L10,13.5 L10,19 L8,20.5 L8,22 L11.5,21 L15,22 L15,20.5 L13,19 L13,13.5 L21,16 Z"/>
+          </svg>
+          <div class="brand-name" style="font-size:1.2rem;">AERONEXA <span>AIRWAYS</span></div>
+        </div>
+        <p style="color:rgba(255,255,255,0.7); font-size:0.9rem; margin-bottom:1.5rem;">
+          Connected Above the Clouds. Experience world-class hospitality, state-of-the-art aircraft fleet, and seamless international journeys.
+        </p>
+
+        <!-- Newsletter Form -->
+        <div style="margin-top:1.5rem;">
+          <h4 style="color:var(--gold); font-size:0.95rem; margin-bottom:0.75rem;">Stay Updated with Aeronexa</h4>
+          <form id="newsletter-form" style="display:flex; gap:0.5rem; max-width:360px;">
+            <input type="email" class="form-control" placeholder="Enter your email address" required style="padding:0.55rem 0.9rem;">
+            <button type="submit" class="btn btn-gold btn-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/flights">Book a Flight</a></li>
+          <li><a href="/destinations">Destinations</a></li>
+          <li><a href="/flight-status">Flight Status</a></li>
+          <li><a href="/manage-booking">Manage Booking</a></li>
+          <li><a href="/checkin">Online Check-in</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Experience</h4>
+        <ul class="footer-links">
+          <li><a href="/fleet">Aircraft Fleet</a></li>
+          <li><a href="/aerorewards">AeroRewards Club</a></li>
+          <li><a href="/about">Our Story & Values</a></li>
+          <li><a href="/contact">Customer Support</a></li>
+          <li><a href="/help">Help Center & FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Legal & Security</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Carriage</a></li>
+          <li><a href="#">Security Statement</a></li>
+          <li><a href="/admin">Administrator Portal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        © 2026 Aeronexa Airways. All rights reserved. Fictional Airline Portfolio Project.
+        <div class="disclaimer-text">
+          Disclaimer: Aeronexa Airways is a fictional airline created for educational and software engineering portfolio purposes. Flights, bookings, flight status, payments, check-in, and other airline services shown in this application use simulated demo data. No real money is transferred.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container"></div>
+
+  <!-- Global Scripts -->
+  <script src="{{ url_for('static', filename='js/qrcode.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

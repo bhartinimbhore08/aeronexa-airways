@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Digital Boarding Pass | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2rem; max-width:850px;">
+  
+  <div id="boarding-pass-render">
+    <div style="text-align:center; padding:3rem;">
+      <p>Loading Digital Boarding Pass...</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const pnr = urlParams.get('pnr');
+
+  if (!pnr) {
+    window.location.href = '/checkin';
+    return;
+  }
+
+  const container = document.getElementById('boarding-pass-render');
+
+  try {
+    const res = await fetch(`/api/boarding-pass/${pnr}`);
+    const data = await res.json();
+
+    if (!res.ok) {
+      container.innerHTML = `
+        <div class="card" style="text-align:center; color:var(--danger); padding:2rem;">
+          <h3>No Boarding Pass Available</h3>
+          <p style="margin:1rem 0;">${data.error || 'Please check in first to generate your boarding pass.'}</p>
+          <a href="/checkin?pnr=${pnr}" class="btn btn-gold">Perform Online Check-in</a>
+        </div>
+      `;
+      return;
+    }
+
+    const { booking, boarding_passes } = data;
+
+    container.innerHTML = boarding_passes.map(bp => `
+      <div class="ticket-container" style="margin-bottom:2rem;">
+        <div class="ticket-header" style="background:linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);">
+          <div>
+            <div style="font-size:0.8rem; color:var(--gold); font-weight:700; text-transform:uppercase;">BOARDING PASS • AERONEXA AIRWAYS</div>
+            <div style="font-size:1.5rem; font-weight:800; color:var(--white);">${bp.title} ${bp.first_name} ${bp.last_name}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.8rem; color:var(--gold); font-weight:700;">PNR</div>
+            <div style="font-size:1.5rem; font-weight:800; color:var(--white); font-family:var(--font-heading);">${booking.pnr}</div>
+          </div>
+        </div>
+
+        <div class="ticket-body">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:1.25rem; margin-bottom:1.5rem; border-bottom:1px solid var(--gray-200); padding-bottom:1.5rem;">
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">FLIGHT</div>
+              <div style="font-size:1.3rem; font-weight:800; color:var(--navy);">${booking.flight_number}</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">ROUTE</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--navy);">${booking.origin} → ${booking.destination}</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">BOARDING TIME</div>
+              <div style="font-size:1.3rem; font-weight:800; color:var(--gold);">${booking.departure_time}</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">GATE</div>
+              <div style="font-size:1.3rem; font-weight:800; color:var(--navy);">${bp.gate}</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">TERMINAL</div>
+              <div style="font-size:1.3rem; font-weight:800; color:var(--navy);">${bp.terminal}</div>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--gray-400); font-weight:700;">SEAT</div>
+              <div style="font-size:1.4rem; font-weight:800; color:var(--navy); background-color:var(--gold-light); display:inline-block; padding:0.1rem 0.6rem; border-radius:4px; border:1px solid var(--gold);">${bp.seat_number}</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="badge badge-gold">ZONE 1</span>
+              <span class="badge badge-success" style="margin-left:0.5rem;">CHECKED IN</span>
+            </div>
+            <div style="font-size:0.85rem; color:var(--gray-600);">
+              Aircraft: <strong>${booking.aircraft}</strong> | Cabin: <strong style="text-transform:capitalize;">${booking.cabin_class}</strong>
+            </div>
+          </div>
+
+          <div class="barcode-visual"></div>
+          <div style="text-align:center; font-size:0.75rem; color:var(--gray-400); margin-top:0.4rem;">
+            ${bp.boarding_pass_code} • SCAN AT SECURITY & GATE
+          </div>
+        </div>
+      </div>
+    `).join('') + `
+      <div style="text-align:center; margin-bottom:3rem;" class="no-print">
+        <button onclick="window.print()" class="btn btn-gold btn-lg">
+          🖨 Print / Download Boarding Pass
+        </button>
+      </div>
+    `;
+
+  } catch (err) {
+    container.innerHTML = `<div class="card" style="color:var(--danger); text-align:center;">Network error loading boarding pass.</div>`;
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Booking | Aeronexa Airways{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2rem; max-width:800px;">
+  
+  <!-- Lookup Card -->
+  <div class="card" style="margin-bottom:2rem; border:1px solid var(--gold);">
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <span class="badge badge-gold" style="margin-bottom:0.4rem;">RESERVATION LOOKUP</span>
+      <h2>Manage Your Flight Booking</h2>
+      <p style="font-size:0.9rem; color:var(--gray-600);">View ticket details, change seats, check in, or cancel your flight.</p>
+    </div>
+
+    <form id="manage-lookup-form">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Booking Reference (PNR) *</label>
+          <input type="text" class="form-control" id="lookup-pnr" placeholder="e.g. AX7K9P" required style="text-transform:uppercase;">
+        </div>
+        <button type="submit" class="btn btn-navy" style="height:44px;">
+          Find Reservation →
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Booking Result Display -->
+  <div id="manage-booking-details"></div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const pnrParam = urlParams.get('pnr');
+
+  if (pnrParam) {
+    document.getElementById('lookup-pnr').value = pnrParam;
+    fetchAndRenderBooking(pnrParam);
+  }
+
+  const form = document.getElementById('manage-lookup-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pnr = document.getElementById('lookup-pnr').value.trim().toUpperCase();
+      if (pnr) fetchAndRenderBooking(pnr);
+    });
+  }
+});
+
+async function fetchAndRenderBooking(pnr) {
+  const container = document.getElementById('manage-booking-details');
+  container.innerHTML = '<div style="text-align:center; padding:2rem;">Fetching booking details...</div>';
+
+  try {
+    const res = await fetch(`/api/bookings/${pnr}`);
+    const data = await res.json();
+
+    if (!res.ok) {
+      container.innerHTML = `<div class="card" style="color:var(--danger); text-align:center;">${data.error || 'Booking not found.'}</div>`;
+      return;
+    }
+
+    const { booking, passengers, payment, checkins } = data;
+
+    container.innerHTML = `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--gray-200); padding-bottom:1rem; margin-bottom:1.5rem;">
+          <div>
+            <span class="badge badge-gold">PNR: ${booking.pnr}</span>
+            <h3 style="color:var(--navy); margin-top:0.4rem;">${booking.origin_city} (${booking.origin}) → ${booking.dest_city} (${booking.destination})</h3>
+          </div>
+          <div>
+            <span class="badge ${booking.booking_status === 'CONFIRMED' ? 'badge-success' : (booking.booking_status === 'CANCELLED' ? 'badge-danger' : 'badge-warning')}" style="font-size:0.9rem;">
+              ${booking.booking_status}
+            </span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; margin-bottom:1.5rem; font-size:0.9rem;">
+          <div>
+            <div style="color:var(--gray-400); font-weight:700;">FLIGHT</div>
+            <div style="font-weight:700; color:var(--navy);">${booking.flight_number} (${booking.aircraft_name})</div>
+          </div>
+          <div>
+            <div style="color:var(--gray-400); font-weight:700;">DEPARTURE</div>
+            <div style="font-weight:700; color:var(--navy);">${booking.departure_time}</div>
+          </div>
+          <div>
+            <div style="color:var(--gray-400); font-weight:700;">CABIN & FARE</div>
+            <div style="font-weight:700; color:var(--navy); text-transform:capitalize;">${booking.cabin_class} (${booking.fare_type})</div>
+          </div>
+          <div>
+            <div style="color:var(--gray-400); font-weight:700;">TOTAL FARE</div>
+            <div style="font-weight:800; color:var(--navy);">${window.Aeronexa.formatCurrency(booking.total_amount)}</div>
+          </div>
+        </div>
+
+        <h4 style="color:var(--navy); margin-bottom:0.75rem;">Travelers</h4>
+        <div style="margin-bottom:1.5rem;">
+          ${passengers.map(p => `
+            <div style="background-color:var(--light); padding:1rem; border-radius:var(--radius-md); margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+              <div>
+                <strong>${p.title} ${p.first_name} ${p.last_name}</strong>
+                <span style="font-size:0.85rem; color:var(--gray-600); margin-left:0.5rem;">Seat: ${p.seat_number || '14A'}</span>
+              </div>
+              <div>
+                <button onclick="promptChangeSeat('${booking.pnr}', ${p.id})" class="btn btn-outline-navy btn-sm">Change Seat</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; padding-top:1.5rem; border-top:1px solid var(--gray-200);">
+          <a href="/confirmation?pnr=${booking.pnr}" class="btn btn-navy">View E-Ticket</a>
+          ${booking.booking_status === 'CONFIRMED' ? `
+            <a href="/checkin?pnr=${booking.pnr}" class="btn btn-gold">Online Check-in</a>
+            <button onclick="confirmCancelBooking('${booking.pnr}')" class="btn btn-outline-navy" style="color:var(--danger); border-color:var(--danger);">
+              Cancel Booking
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+
+  } catch (err) {
+    container.innerHTML = `<div class="card" style="color:var(--danger); text-align:center;">Error loading reservation.</div>`;
+  }
+}
+
+window.promptChangeSeat = function(pnr, passengerId) {
+  const newSeat = prompt("Enter new seat number (e.g. 15B, 18F):");
+  if (!newSeat) return;
+
+  fetch('/api/update-seat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ pnr, passenger_id: passengerId, seat_number: newSeat })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.message) {
+      window.Aeronexa.showToast(data.message, 'success');
+      fetchAndRenderBooking(pnr);
+    } else {
+      window.Aeronexa.showToast(data.error || 'Seat update failed.', 'error');
+    }
+  });
+};
+
+window.confirmCancelBooking = function(pnr) {
+  if (confirm(`Are you sure you want to cancel booking ${pnr}?`)) {
+    fetch('/api/cancel-booking', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ pnr })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message) {
+        window.Aeronexa.showToast(data.message, 'success');
+        fetchAndRenderBooking(pnr);
+      } else {
+        window.Aeronexa.showToast(data.error || 'Cancellation failed.', 'error');
+      }
+    });
+  }
+};
+</script>
+{% endblock %}
